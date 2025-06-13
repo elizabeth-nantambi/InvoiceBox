@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .sidebar {
+      position: absolute;
+      top: 54px;
+      left: 0;
+      height: 150vh;
+      width: 300px;
+      background-color: #2465a6;
+      padding-top: 60px; /* adjust if your base.html has a navbar */
+      z-index: 1000;
+    }
+  
+    .main-content {
+      margin-left: 220px;
+      padding: 2rem;
+    }
+  
+    .sidebar .nav-link {
+      padding: 10px 20px;
+    }
+  
+    .sidebar .nav-link:hover {
+      background-color: #343a40;
+    }
+  </style>
+  
+  <div class="sidebar text-white">
+    <h4 class="text-center border-bottom pb-3">Provider Panel</h4>
+    <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link text-white" href="{% url 'provider_dashboard' %}"><img src="https://cdn-icons-png.flaticon.com/128/8899/8899687.png "style="max-width: 20px;"> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="{% url 'create_invoice' %}"> <img src="https://cdn-icons-png.flaticon.com/128/4862/4862191.png "style="max-width: 20px;"> Invoice</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="{% url 'provider_analytics' %}"><img src="https://cdn-icons-png.flaticon.com/128/10397/10397171.png "style="max-width: 20px;"> Analytics</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#"><img src="https://cdn-icons-png.flaticon.com/128/10024/10024002.png "style="max-width: 20px;"> Settings</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="#"><img src="https://cdn-icons-png.flaticon.com/128/12000/12000925.png "style="max-width: 20px;"> Help</a></li>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link text-white"><img src="https://cdn-icons-png.flaticon.com/128/4436/4436954.png "style="max-width: 20px;"> Logout</button>
+          </form> 
+    </ul>
+  </div>
+  <div class="main-content container-fluid mt-4">
+
+  <h2 class="mb-4">📈 Invoice Analytics</h2>
+
+  <!-- Metric Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+      <div class="card text-center bg-success text-white">
+        <div class="card-body">
+          <h6>Total Paid Invoices</h6>
+          <h3>{{ paid_count }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center bg-warning text-dark">
+        <div class="card-body">
+          <h6>Pending Invoices</h6>
+          <h3>{{ pending_count }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center bg-primary text-white">
+        <div class="card-body">
+          <h6>Amount Paid</h6>
+          <h4>${{ total_amount_paid }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center bg-danger text-white">
+        <div class="card-body">
+          <h6>Amount Pending</h6>
+          <h4>${{ total_amount_pending }}</h4>
+        </div>
+      </div>
+    </div>
+</div>
+
+  <!-- Charts -->
+  <div class="row g-4">
+    <div class="col-md-6">
+      <canvas id="statusPie"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="amountBar"></canvas>
+    </div>
+    <div class="col-md-12">
+      <canvas id="lineChart" height="100"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Pie Chart
+  new Chart(document.getElementById("statusPie"), {
+    type: 'pie',
+    data: {
+      labels: ["Paid", "Pending"],
+      datasets: [{
+        data: [{{ paid_count|default:0 }}, {{ pending_count|default:0 }}],
+        backgroundColor: ["#198754", "#ffc107"]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom' } }
+    }
+  });
+
+  // Bar Chart
+  new Chart(document.getElementById("amountBar"), {
+    type: 'bar',
+    data: {
+      labels: ["Paid", "Pending"],
+      datasets: [{
+        label: 'Invoice Amounts ($)',
+        data: [{{ total_amount_paid|default:0 }}, {{ total_amount_pending|default:0 }}],
+        backgroundColor: ["#0d6efd", "#dc3545"]
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+  // Line Chart
+  new Chart(document.getElementById("lineChart"), {
+    type: 'line',
+    data: {
+      labels: [{% for entry in date_data %}"{{ entry.date }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+      datasets: [{
+        label: 'Invoices Created',
+        data: [{% for entry in date_data %}{{ entry.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+        borderColor: "#6f42c1",
+        fill: false,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Invoice Detail</h2>
+<ul class="list-group mt-4">
+    <li class="list-group-item"><strong>Description:</strong> {{ object.description }}</li>
+    <li class="list-group-item"><strong>Amount:</strong> {{ object.amount }} {{ object.currency }}</li>
+    <li class="list-group-item"><strong>Status:</strong> {{ object.status }}</li>
+</ul>
+{% endblock %}

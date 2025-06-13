@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Hero Section -->
+<div class="text-center py-5">
+    <h1 class="display-3 fw-bold mb-3">Welcome to InvoiceBox</h1>
+    <p class="lead mb-4">Your trusted platform for creating, sending, and managing invoices with ease.</p>
+
+    <div class="d-flex justify-content-center gap-3">
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4">
+            <i class="bi bi-box-arrow-in-right me-2"></i> Login
+        </a>
+        <a href="{% url 'register' %}" class="btn btn-outline-success btn-lg px-4">
+            <i class="bi bi-person-plus me-2"></i> Register
+        </a>
+    </div>
+
+    <div class="mt-5">
+        <img src="https://cdn.dribbble.com/userupload/10297964/file/original-c5fd53a7198ef48353d8554eb5387b79.png?resize=1504x945&vertical=center"
+             alt="Invoice Illustration"
+             class="img-fluid rounded shadow-lg"
+             style="max-width: 600px;">
+    </div>
+</div>
+
+<!-- User Stories -->
+<section class="my-5">
+    <h2 class="text-center mb-4">Who Uses InvoiceBox?</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <i class="bi bi-person-badge fs-2 text-primary"></i>
+                    <h5 class="mt-3">Freelancers</h5>
+                    <p>Create and send branded invoices in seconds to get paid faster.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <i class="bi bi-building fs-2 text-success"></i>
+                    <h5 class="mt-3">Small Businesses</h5>
+                    <p>Manage client billing, payments, and financial records all in one platform.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <i class="bi bi-people fs-2 text-warning"></i>
+                    <h5 class="mt-3">Purchasing Teams</h5>
+                    <p>Receive, view, and pay invoices easily, with transparent records for every transaction.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Plans -->
+<section class="my-5">
+    <h2 class="text-center mb-4">Simple Pricing</h2>
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+            <div class="card border-primary shadow-sm h-100">
+                <div class="card-header bg-primary text-white text-center fw-bold">Basic</div>
+                <div class="card-body text-center">
+                    <h3 class="card-title">$0</h3>
+                    <p class="card-text">Perfect for individuals just starting out.</p>
+                    <ul class="list-unstyled mb-4">
+                        <li>✔ Up to 10 invoices/month</li>
+                        <li>✔ Invoice tracking</li>
+                        <li>✔ Email support</li>
+                    </ul>
+                    <a href="{% url 'register' %}" class="btn btn-outline-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-success shadow-sm h-100">
+                <div class="card-header bg-success text-white text-center fw-bold">Pro</div>
+                <div class="card-body text-center">
+                    <h3 class="card-title">$9.99<span class="fs-6">/month</span></h3>
+                    <p class="card-text">Great for professionals and teams.</p>
+                    <ul class="list-unstyled mb-4">
+                        <li>✔ Unlimited invoices</li>
+                        <li>✔ Analytics & insights</li>
+                        <li>✔ Priority support</li>
+                    </ul>
+                    <a href="{% url 'register' %}" class="btn btn-success">Upgrade Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">What Our Users Say</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <p class="fst-italic">"InvoiceBox made it easy to manage my freelance billing. Payments are faster, and my clients love the clarity."</p>
+                        <p class="fw-bold mb-0">— Sarah, Freelancer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <p class="fst-italic">"As a business owner, I appreciate the simplicity and efficiency InvoiceBox offers. It’s a must-have tool."</p>
+                        <p class="fw-bold mb-0">— James, Startup Owner</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <p class="fst-italic">"Managing invoices used to be chaotic. Now it’s organized, quick, and reliable."</p>
+                        <p class="fw-bold mb-0">— Lisa, Procurement Officer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Us -->
+<section class="my-5">
+    <h2 class="text-center mb-4">Have Questions?</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <p>If you have questions or need support, feel free to reach out. We're here to help!</p>
+            <a href="mailto:support@invoicebox.com" class="btn btn-outline-dark">
+                <i class="bi bi-envelope me-2"></i> support@invoicebox.com
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

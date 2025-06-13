@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .center-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .register-card {
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  select:invalid {
+    color: gray;
+  }
+  .register-card input,
+  .register-card select {
+    width: 70% !important;
+  }
+</style>
+
+<div class="center-container">
+  <div class="card register-card p-4">
+    <div class="card-body">
+      <h2 class="mb-3 text-center">Register</h2>
+      <p class="text-muted text-center mb-4">Please fill in the form below to create a new account.</p>
+      
+      {% if messages %}
+        <div class="alert alert-info">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post" action="{% url 'register' %}" novalidate>
+        {% csrf_token %}
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            {{ form.errors }}
+          </div>
+        {% endif %}
+        {{ form.non_field_errors }}
+
+        <div class="mb-3" align ="center">
+          <label for="id_username" class="form-label">Username</label>
+          {{ form.username }}
+        </div>
+        <div class="mb-3"  align ="center">
+          <label for="id_email" class="form-label">Email</label>
+          {{ form.email }}
+        </div>
+        <div class="mb-3"  align ="center">
+          <label class="form-label">Role</label>
+          {{ form.role }}
+        </div>
+        <script>
+          // Add placeholder to the role field (if it's a <select>)
+          document.addEventListener("DOMContentLoaded", function () {
+            const roleField = document.getElementById("id_role");
+            if (roleField && roleField.tagName === "SELECT") {
+              const placeholderOption = document.createElement("option");
+              placeholderOption.text = "Select role";
+              placeholderOption.value = "";
+              placeholderOption.disabled = true;
+              placeholderOption.selected = true;
+              roleField.prepend(placeholderOption);
+            }
+          });
+        </script>
+        <div class="mb-3"  align ="center" >
+          <label for="id_password1" class="form-label">Password</label>
+          {{ form.password1 }}
+        </div>
+        <div class="mb-3"  align ="center">
+          <label for="id_password2" class="form-label">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+        <button type="submit" class="btn btn-success w-100">Register</button>
+      </form>
+
+      <div class="text-center mt-3">
+        <small>Already have an account? <a href="{% url 'login' %}">Login</a></small>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
