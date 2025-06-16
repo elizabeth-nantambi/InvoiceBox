@@ -125,9 +125,9 @@ def provider_analytics(request):
     total_amount_paid = invoices.filter(status='paid').aggregate(total=Sum('amount'))['total'] or 0
     total_amount_pending = invoices.filter(status='pending').aggregate(total=Sum('amount'))['total'] or 0
 
-    # Group by date (last 7 days)
+    
     date_data = []
-    for i in range(6, -1, -1):  # 6 days ago to today
+    for i in range(6, -1, -1):  
         day = now().date() - timedelta(days=i)
         count = invoices.filter(date_created__date=day).count()
         date_data.append({'date': day.strftime('%b %d'), 'count': count})

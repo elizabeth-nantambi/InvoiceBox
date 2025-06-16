@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
         self.stdout.write("Creating invoices and payments...")
 
-        # Create invoices and optional payments
+        # Create invoices 
         for i in range(15):
             provider = random.choice(providers)
             purchaser = random.choice(purchasers)
